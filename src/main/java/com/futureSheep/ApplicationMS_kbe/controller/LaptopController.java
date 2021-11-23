@@ -47,13 +47,13 @@ public class LaptopController {
 
     /**
      * curl -v -X POST localhost:8080/api/laptops -H 'Content-Type:application/json' -d '{"brand": "JAJAJAJA", "price": "229.99", "weight": "12.1"}'
-     * NOT WORKING
      * @param newLaptop stored in db
      * @return 201 HTTP Created response
      */
     @PostMapping("/laptops")
     ResponseEntity<?> addLaptop(@RequestBody Laptop newLaptop) {
         EntityModel<Laptop> entityModel = assembler.toModel(newLaptop);
+        repository.save(newLaptop);
         return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
     }
 
