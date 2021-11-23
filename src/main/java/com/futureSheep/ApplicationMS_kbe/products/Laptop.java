@@ -1,12 +1,23 @@
-package products;
+package com.futureSheep.ApplicationMS_kbe.products;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public class Laptop {
 
+    @Id @GeneratedValue
+    //@Column(name = "id", updatable = false)
     private UUID id;
+    //@Column(name = "brand", nullable = false, columnDefinition = "TEXT")
     private String brand;
+    //@Column(name = "price", nullable = false)
     private double price;
+    //@Column(name = "weight", nullable = false)
     private double weight;
 
     public Laptop() {};
@@ -58,5 +69,18 @@ public class Laptop {
                 ", price=" + price +
                 ", weight=" + weight +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Laptop laptop = (Laptop) o;
+        return Double.compare(laptop.price, price) == 0 && Double.compare(laptop.weight, weight) == 0 && Objects.equals(id, laptop.id) && Objects.equals(brand, laptop.brand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, brand, price, weight);
     }
 }
