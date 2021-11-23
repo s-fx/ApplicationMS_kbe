@@ -1,6 +1,5 @@
 package com.futureSheep.ApplicationMS_kbe.products;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
