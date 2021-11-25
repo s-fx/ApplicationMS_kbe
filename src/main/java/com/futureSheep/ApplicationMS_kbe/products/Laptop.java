@@ -1,22 +1,21 @@
 package com.futureSheep.ApplicationMS_kbe.products;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Table(name = "laptopdb")
 public class Laptop {
 
     @Id @GeneratedValue
-    //@Column(name = "id", updatable = false)
+    @Column(name = "id", updatable = false)
     private UUID id;
-    //@Column(name = "brand", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "brand", nullable = false, columnDefinition = "TEXT")
     private String brand;
-    //@Column(name = "price", nullable = false)
+    @Column(name = "price", nullable = false)
     private double price;
-    //@Column(name = "weight", nullable = false)
+    @Column(name = "weight", nullable = false)
     private double weight;
 
     public Laptop() {};
