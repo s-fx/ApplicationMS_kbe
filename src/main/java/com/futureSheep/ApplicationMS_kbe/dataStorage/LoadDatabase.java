@@ -19,14 +19,14 @@ public class LoadDatabase {
         return args -> {
             log.info("Preloading " + repository.save(new Laptop("HP", 999.99,55.4)));
             log.info("Preloading " + repository.save(new Laptop("Lenovo", 1299.99,65.6)));
-            log.info("Preloading " + repository.save(new Laptop("MacBook Pro", 2499.99,23.4)));
-            log.info("Preloading " + repository.save(new Laptop("Dell XPS", 799.99,65.7)));
+            log.info("Preloading " + repository.save(new Laptop("MacBook", 2499.99,23.4)));
+/*            log.info("Preloading " + repository.save(new Laptop("Dell XPS", 799.99,65.7)));
             log.info("Preloading " + repository.save(new Laptop("ThinkPad T490", 1099.99,44.7)));
             log.info("Preloading " + repository.save(new Laptop("IdeaPad", 699.99,98.9)));
             log.info("Preloading " + repository.save(new Laptop("Alienware", 1899.99,9.9)));
             log.info("Preloading " + repository.save(new Laptop("Dell N1", 299.99,98.0)));
             log.info("Preloading " + repository.save(new Laptop("ThinkPad T590", 2299.99,11.1)));
-            log.info("Preloading " + repository.save(new Laptop("Lenovo X1", 2999.99,21.2)));
+            log.info("Preloading " + repository.save(new Laptop("Lenovo X1", 2999.99,21.2)));*/
         };
     }
 

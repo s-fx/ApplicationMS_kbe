@@ -5,6 +5,11 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
+
+/**
+ * go to http://localhost:8080/swagger-ui/index.html#
+ * to se swagger-ui
+ */
 public class SwaggerConfig {
     //funktioniert noch nicht richtig
     @Bean
