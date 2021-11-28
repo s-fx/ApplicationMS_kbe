@@ -4,6 +4,8 @@ import com.futureSheep.ApplicationMS_kbe.controller.exceptions.LaptopNotFoundExc
 import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopModelAssembler;
 import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopRepository;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
+import com.futureSheep.ApplicationMS_kbe.service.CalculatorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -23,6 +25,9 @@ public class LaptopController {
 
     private final LaptopRepository repository;
     private final LaptopModelAssembler assembler;
+
+    @Autowired
+    private CalculatorService calculatorService;
 
 
     public LaptopController(LaptopRepository repository, LaptopModelAssembler assembler) {
@@ -111,6 +116,14 @@ public class LaptopController {
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/laptops/calculateMWS/{id}")
+    public double calculateMWSForLaptop(@PathVariable UUID id){
+        Laptop laptop = repository.findById(id).orElseThrow(() -> new LaptopNotFoundException(id));
+        double price = laptop.getPrice();
+        return calculatorService.getMWSOfLaptopFromExternalAPI(price);
+    }
+
 
 }
 
