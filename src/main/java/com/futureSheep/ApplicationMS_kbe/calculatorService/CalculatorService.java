@@ -1,4 +1,4 @@
-package com.futureSheep.ApplicationMS_kbe.service;
+package com.futureSheep.ApplicationMS_kbe.calculatorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
