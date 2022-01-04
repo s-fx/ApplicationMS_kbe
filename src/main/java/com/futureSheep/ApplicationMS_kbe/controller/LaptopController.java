@@ -1,5 +1,6 @@
 package com.futureSheep.ApplicationMS_kbe.controller;
 
+import com.futureSheep.ApplicationMS_kbe.controller.exceptions.LaptopNotFoundException;
 import com.futureSheep.ApplicationMS_kbe.productService.ProductService;
 import com.futureSheep.ApplicationMS_kbe.productService.ProductServiceImpl;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
@@ -41,7 +42,7 @@ public class LaptopController {
     }
 
     /**
-     * curl -v -X POST localhost:8080/api/laptops -H 'Content-Type:productService/json' -d '{"brand": "JAJAJAJA", "price": "229.99", "weight": "12.1"}'
+     * curl -v -X POST localhost:8080/api/laptops -H 'Content-Type:application/json' -d '{"brand": "JAJAJAJA", "price": "229.99", "weight": "12.1"}'
      * why wildcard <?> ???
      */
     @PostMapping("/laptops")

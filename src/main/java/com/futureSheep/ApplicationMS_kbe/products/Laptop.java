@@ -1,6 +1,7 @@
 package com.futureSheep.ApplicationMS_kbe.products;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -12,10 +13,15 @@ public class Laptop {
     @Column(name = "id", updatable = false)
     private UUID id;
     @Column(name = "brand", nullable = false, columnDefinition = "TEXT")
+    @NotNull(message = "Brand name must be betweenn 3 and 20 characters")
+    @Size(min = 1, max = 20)
     private String brand;
     @Column(name = "price", nullable = false)
+    @NotNull(message = "Price can not be 0")
     private double price;
-    @Column(name = "weight", nullable = false)
+    //@Column(name = "weight", nullable = false)
+    //@NotNull(message = "Weight can not be 0")
+    @Positive(message = "Weight must be positive")
     private double weight;
 
     public Laptop() {};
@@ -24,6 +30,7 @@ public class Laptop {
         this.brand = brand;
         this.price = price;
         this.weight = weight;
+        //double mws = 0.0;
     }
 
     public UUID getId() {

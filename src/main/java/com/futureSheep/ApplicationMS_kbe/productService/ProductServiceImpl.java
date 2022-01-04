@@ -5,6 +5,7 @@ import com.futureSheep.ApplicationMS_kbe.controller.exceptions.LaptopNotFoundExc
 import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopModelAssembler;
 import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopRepository;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
+import com.futureSheep.ApplicationMS_kbe.validation.LaptopValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,8 @@ public class ProductServiceImpl implements ProductService {
     private LaptopModelAssembler assembler;
     @Autowired
     private CalculatorService calculatorService;
+    @Autowired
+    private LaptopValidationService laptopValidationService;
 
     @Override
     public List<EntityModel<Laptop>> collectAllLaptops() {
@@ -45,12 +48,25 @@ public class ProductServiceImpl implements ProductService {
          * hier nicht mehr saven sondern validator.save(laptop)
          * und im validator wird gesafet
          */
-        repository.save(laptop);
+        laptopValidationService.addLaptop(laptop);
+        //repository.save(laptop);
         return entityModel;
     }
 
     @Override
+    public void saveLaptopIntoDB2(Laptop laptop) {
+        repository.save(laptop);
+    }
+
+
+    /**
+     * vielleicht ein String eingeben und den in ne UUID umwandeln
+     * @param id
+     * @return
+     */
+    @Override
     public EntityModel<Laptop> getSingleLaptop(UUID id) {
+        // muss auch direkt mws mitgeben danach
         Laptop laptop = repository.findById(id).orElseThrow(() -> new LaptopNotFoundException(id));
         return assembler.toModel(laptop);
     }

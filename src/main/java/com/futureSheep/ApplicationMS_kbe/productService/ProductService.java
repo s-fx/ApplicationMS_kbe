@@ -20,6 +20,8 @@ public interface ProductService {
 
     double getMWSOfLaptop(double price);
 
+    void saveLaptopIntoDB2(Laptop laptop);
+
 
 
 
