@@ -1,9 +1,8 @@
 package com.futureSheep.ApplicationMS_kbe.controller;
 
-import com.futureSheep.ApplicationMS_kbe.application.ApplicationForLaptopController;
-import com.futureSheep.ApplicationMS_kbe.application.ApplicationForLaptopControllerImpl;
+import com.futureSheep.ApplicationMS_kbe.productService.ProductService;
+import com.futureSheep.ApplicationMS_kbe.productService.ProductServiceImpl;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
-import com.futureSheep.ApplicationMS_kbe.calculatorService.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -22,11 +21,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/api")
 public class LaptopController {
 
-    @Autowired
-    private CalculatorService calculatorService;
+    /*@Autowired
+    private CalculatorService calculatorService;*/
 
     @Autowired
-    private ApplicationForLaptopController application = new ApplicationForLaptopControllerImpl();
+    private ProductService productService = new ProductServiceImpl();
 
 
     /**
@@ -36,18 +35,18 @@ public class LaptopController {
      */
     @GetMapping("/laptops")
     public CollectionModel<EntityModel<Laptop>> getAllLaptops() {
-        List<EntityModel<Laptop>> laptops = application.collectAllLaptops();
+        List<EntityModel<Laptop>> laptops = productService.collectAllLaptops();
         System.out.println(laptops);
         return CollectionModel.of(laptops, linkTo(methodOn(LaptopController.class).getAllLaptops()).withSelfRel());
     }
 
     /**
-     * curl -v -X POST localhost:8080/api/laptops -H 'Content-Type:application/json' -d '{"brand": "JAJAJAJA", "price": "229.99", "weight": "12.1"}'
+     * curl -v -X POST localhost:8080/api/laptops -H 'Content-Type:productService/json' -d '{"brand": "JAJAJAJA", "price": "229.99", "weight": "12.1"}'
      * why wildcard <?> ???
      */
     @PostMapping("/laptops")
     ResponseEntity<?> addLaptop(@RequestBody Laptop newLaptop) {
-        EntityModel<Laptop> entityModel = application.saveLaptopIntoDB(newLaptop);
+        EntityModel<Laptop> entityModel = productService.saveLaptopIntoDB(newLaptop);
         return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
     }
 
@@ -59,7 +58,7 @@ public class LaptopController {
      */
     @GetMapping("/laptops/{id}")
     public EntityModel<Laptop> getLaptop(@PathVariable UUID id) {
-        return application.getSingleLaptop(id);
+        return productService.getSingleLaptop(id);
     }
 
 
@@ -68,19 +67,19 @@ public class LaptopController {
      */
     @DeleteMapping("/laptops/{id}")
     ResponseEntity<?> deleteLaptop(@PathVariable UUID id) {
-        application.deleteLaptop(id);
+        productService.deleteLaptop(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/laptops/calculateMWS/{id}")
     public double calculateMWSForLaptop(@PathVariable UUID id){
-        double price = application.getPriceOfLaptop(id);
-        return calculatorService.getMWSOfLaptopFromExternalAPI(price);
+        double price = productService.getPriceOfLaptop(id);
+        return productService.getMWSOfLaptop(price);
     }
 
 
     /*    *
-     * curl -v -X PUT localhost:8080/api/laptops/UUID -H 'Content-Type:application/json' -d '{"brand": "UPDATED_LAPTOP", "price": "499.99", "weight": "99.99"}'
+     * curl -v -X PUT localhost:8080/api/laptops/UUID -H 'Content-Type:productService/json' -d '{"brand": "UPDATED_LAPTOP", "price": "499.99", "weight": "99.99"}'
      * @param newLaptop laptop
      * @param id of laptop
      * @return save into h2*/

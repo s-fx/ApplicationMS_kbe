@@ -1,4 +1,4 @@
-package com.futureSheep.ApplicationMS_kbe.application;
+package com.futureSheep.ApplicationMS_kbe.productService;
 
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import org.springframework.hateoas.EntityModel;
@@ -6,7 +6,7 @@ import org.springframework.hateoas.EntityModel;
 import java.util.List;
 import java.util.UUID;
 
-public interface ApplicationForLaptopController {
+public interface ProductService {
 
     List<EntityModel<Laptop>> collectAllLaptops();
 
@@ -17,6 +17,8 @@ public interface ApplicationForLaptopController {
     boolean deleteLaptop(UUID id);
 
     double getPriceOfLaptop(UUID id);
+
+    double getMWSOfLaptop(double price);
 
 
 

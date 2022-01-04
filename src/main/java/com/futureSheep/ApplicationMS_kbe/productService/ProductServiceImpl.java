@@ -1,5 +1,6 @@
-package com.futureSheep.ApplicationMS_kbe.application;
+package com.futureSheep.ApplicationMS_kbe.productService;
 
+import com.futureSheep.ApplicationMS_kbe.calculatorService.CalculatorService;
 import com.futureSheep.ApplicationMS_kbe.controller.exceptions.LaptopNotFoundException;
 import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopModelAssembler;
 import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopRepository;
@@ -15,15 +16,18 @@ import java.util.stream.Collectors;
 /**
  * Diese Klasse bearbeitet alle Dinge die im LaptopController nötig sind,
  * somit ist das repository im LaptopController nicht bekannt und abgekapselt ist
+ * ist ProductService in seinem Diagram...
  */
 @Service
-public class ApplicationForLaptopControllerImpl implements ApplicationForLaptopController {
+public class ProductServiceImpl implements ProductService {
 
 
     @Autowired
     private LaptopRepository repository;
     @Autowired
     private LaptopModelAssembler assembler;
+    @Autowired
+    private CalculatorService calculatorService;
 
     @Override
     public List<EntityModel<Laptop>> collectAllLaptops() {
@@ -62,4 +66,11 @@ public class ApplicationForLaptopControllerImpl implements ApplicationForLaptopC
         Laptop laptop = repository.findById(id).orElseThrow(() -> new LaptopNotFoundException(id));
         return laptop.getPrice();
     }
+
+    @Override
+    public double getMWSOfLaptop(double price) {
+        return calculatorService.getMWSOfLaptopFromExternalAPI(price);
+    }
+
+
 }
