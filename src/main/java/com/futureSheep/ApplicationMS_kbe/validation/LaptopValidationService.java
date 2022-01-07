@@ -46,7 +46,7 @@ public class LaptopValidationService {
         //unserem DataStorage Interface geadded. Was auch immer das dann
         //sein wird zB:
         //dao.addLaptop(laptop)
-        productService.saveLaptopIntoDB2(laptop);
+        productService.saveLaptopIntoDB(laptop);
 
         return "Laptop: " + laptop.getBrand() + "was added";
 

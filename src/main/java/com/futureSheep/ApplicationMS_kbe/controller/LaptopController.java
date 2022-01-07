@@ -1,8 +1,6 @@
 package com.futureSheep.ApplicationMS_kbe.controller;
 
-import com.futureSheep.ApplicationMS_kbe.controller.exceptions.LaptopNotFoundException;
 import com.futureSheep.ApplicationMS_kbe.productService.ProductService;
-import com.futureSheep.ApplicationMS_kbe.productService.ProductServiceImpl;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -22,11 +20,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/api")
 public class LaptopController {
 
-    /*@Autowired
-    private CalculatorService calculatorService;*/
-
     @Autowired
-    private ProductService productService = new ProductServiceImpl();
+    private ProductService productService;
+
 
 
     /**
@@ -47,7 +43,7 @@ public class LaptopController {
      */
     @PostMapping("/laptops")
     ResponseEntity<?> addLaptop(@RequestBody Laptop newLaptop) {
-        EntityModel<Laptop> entityModel = productService.saveLaptopIntoDB(newLaptop);
+        EntityModel<Laptop> entityModel = productService.validateLaptopBeforeSavingIntoDB(newLaptop);
         return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
     }
 

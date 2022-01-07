@@ -42,28 +42,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public EntityModel<Laptop> saveLaptopIntoDB(Laptop laptop) {
+    public EntityModel<Laptop> validateLaptopBeforeSavingIntoDB(Laptop laptop) {
         EntityModel<Laptop> entityModel = assembler.toModel(laptop);
-        /**
-         * hier nicht mehr saven sondern validator.save(laptop)
-         * und im validator wird gesafet
-         */
         laptopValidationService.addLaptop(laptop);
-        //repository.save(laptop);
         return entityModel;
     }
 
     @Override
-    public void saveLaptopIntoDB2(Laptop laptop) {
+    public void saveLaptopIntoDB(Laptop laptop) {
         repository.save(laptop);
     }
 
 
-    /**
-     * vielleicht ein String eingeben und den in ne UUID umwandeln
-     * @param id
-     * @return
-     */
     @Override
     public EntityModel<Laptop> getSingleLaptop(UUID id) {
         // muss auch direkt mws mitgeben danach
@@ -72,9 +62,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean deleteLaptop(UUID id) {
+    public void deleteLaptop(UUID id) {
         repository.deleteById(id);
-        return false;
     }
 
     @Override

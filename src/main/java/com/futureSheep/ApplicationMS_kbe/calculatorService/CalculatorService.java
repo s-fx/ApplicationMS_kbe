@@ -1,23 +1,7 @@
 package com.futureSheep.ApplicationMS_kbe.calculatorService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+public interface CalculatorService {
 
-@Service("CalculatorService")
-public class CalculatorService {
-
-    @Autowired
-    private RestTemplate restTemplate;
-
-    private final String CALC_API = "http://localhost:8081/api/calculator";
-
-
-
-    public Double getMWSOfLaptopFromExternalAPI(double price) {
-        String url = CALC_API + "/{price}";
-        return restTemplate.getForObject(url, Double.class, price);
-    }
-
+    Double getMWSOfLaptopFromExternalAPI(double price);
 
 }
