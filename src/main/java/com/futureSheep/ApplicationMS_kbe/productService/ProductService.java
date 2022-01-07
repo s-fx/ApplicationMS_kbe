@@ -10,17 +10,17 @@ public interface ProductService {
 
     List<EntityModel<Laptop>> collectAllLaptops();
 
-    EntityModel<Laptop> saveLaptopIntoDB(Laptop laptop);
+    EntityModel<Laptop> validateLaptopBeforeSavingIntoDB(Laptop laptop);
 
     EntityModel<Laptop> getSingleLaptop(UUID id);
 
-    boolean deleteLaptop(UUID id);
+    void deleteLaptop(UUID id);
 
     double getPriceOfLaptop(UUID id);
 
     double getMWSOfLaptop(double price);
 
-    void saveLaptopIntoDB2(Laptop laptop);
+    void saveLaptopIntoDB(Laptop laptop);
 
 
 
