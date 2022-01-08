@@ -6,6 +6,7 @@ import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopModelAssembler;
 import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopRepository;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import com.futureSheep.ApplicationMS_kbe.validation.LaptopValidationService;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
  * somit ist das repository im LaptopController nicht bekannt und abgekapselt ist
  * ist ProductService in seinem Diagram...
  */
+@CommonsLog
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -37,14 +39,15 @@ public class ProductServiceImpl implements ProductService {
         List<EntityModel<Laptop>> laptops = repository.findAll().stream() //
                 .map(assembler::toModel) //
                 .collect(Collectors.toList());
-        System.out.println(laptops);
+        log.info("All Laptops collected from repository");
         return laptops;
     }
 
     @Override
     public EntityModel<Laptop> validateLaptopBeforeSavingIntoDB(Laptop laptop) {
         EntityModel<Laptop> entityModel = assembler.toModel(laptop);
-        laptopValidationService.addLaptop(laptop);
+        String res = laptopValidationService.addLaptop(laptop);
+        log.info(res);
         return entityModel;
     }
 
