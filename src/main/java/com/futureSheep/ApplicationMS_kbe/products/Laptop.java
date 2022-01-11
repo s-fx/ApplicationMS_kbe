@@ -25,6 +25,8 @@ public class Laptop {
     private double weight;
     private Location location;
 
+    private double mehrwertsteuer;
+
     public Laptop() {};
 
     public Laptop(String brand, double price, double weight, Location location) {
@@ -32,7 +34,7 @@ public class Laptop {
         this.price = price;
         this.weight = weight;
         this.location = location;
-        //double mws = 0.0;
+        this.mehrwertsteuer = 0.0;
     }
 
     public UUID getId() {
@@ -96,5 +98,13 @@ public class Laptop {
     @Override
     public int hashCode() {
         return Objects.hash(id, brand, price, weight);
+    }
+
+    public double getMehrwertsteuer() {
+        return mehrwertsteuer;
+    }
+
+    public void setMehrwertsteuer(double mehrwertsteuer) {
+        this.mehrwertsteuer = mehrwertsteuer;
     }
 }

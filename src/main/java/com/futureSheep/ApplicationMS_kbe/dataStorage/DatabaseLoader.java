@@ -10,9 +10,9 @@ import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 
 
 @Configuration
-public class LoadDatabase {
+public class DatabaseLoader {
 
-    private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+    private static final Logger log = LoggerFactory.getLogger(DatabaseLoader.class);
 
     @Bean
     CommandLineRunner initDatabase(LaptopRepository repository) {
