@@ -23,13 +23,15 @@ public class Laptop {
     //@NotNull(message = "Weight can not be 0")
     @Positive(message = "Weight must be positive")
     private double weight;
+    private Location location;
 
     public Laptop() {};
 
-    public Laptop(String brand, double price, double weight) {
+    public Laptop(String brand, double price, double weight, Location location) {
         this.brand = brand;
         this.price = price;
         this.weight = weight;
+        this.location = location;
         //double mws = 0.0;
     }
 
@@ -65,6 +67,13 @@ public class Laptop {
         this.weight = weight;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
     @Override
     public String toString() {
