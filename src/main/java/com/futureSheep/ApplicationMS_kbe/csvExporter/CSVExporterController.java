@@ -17,7 +17,7 @@ public class CSVExporterController {
     @Autowired
     private CSVExporter csvExporter;
 
-    @RequestMapping(path = "/csv")
+    @RequestMapping(path = "/laptops/csv")
     public void getAllLaptopsInCsv(HttpServletResponse servletResponse) throws IOException {
         log.info("GET Request for csv file");
         servletResponse.setContentType("text/csv");
