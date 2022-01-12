@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/external")
+@RequestMapping("/api")
 public class GoogleController {
 
     @Autowired
