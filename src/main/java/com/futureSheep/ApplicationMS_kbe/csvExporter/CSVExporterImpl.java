@@ -30,7 +30,7 @@ public class CSVExporterImpl implements CSVExporter {
             for (EntityModel<Laptop> entityLaptop : allLaptops) {
                 Laptop laptop = entityLaptop.getContent();
                 assert laptop != null;
-                csvPrinter.printRecord(laptop.getId(), laptop.getBrand(), laptop.getPrice(), laptop.getWeight());
+                csvPrinter.printRecord(laptop.getId(), laptop.getBrand(), laptop.getPrice(), laptop.getWeight(), laptop.getMehrwertsteuer(), laptop.getLocation());
             }
         } catch (IOException e) {
             log.error("Error While writing CSV ", e);
