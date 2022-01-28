@@ -40,6 +40,12 @@ public class ProductServiceImpl implements ProductService {
                 .map(assembler::toModel) //
                 .collect(Collectors.toList());
         log.info("All Laptops collected from repository");
+        for (EntityModel<Laptop> laptop : laptops) {
+            Laptop lap = laptop.getContent();
+            lap.setMehrwertsteuer(getMWSOfLaptop(lap.getPrice()));
+        }
+
+
         return laptops;
     }
 
@@ -61,6 +67,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public EntityModel<Laptop> getSingleLaptop(UUID id) {
         Laptop laptop = repository.findById(id).orElseThrow(() -> new LaptopNotFoundException(id));
+        double mehrwertsteuer = getMWSOfLaptop(laptop.getPrice());
+        laptop.setMehrwertsteuer(mehrwertsteuer);
         return assembler.toModel(laptop);
     }
 

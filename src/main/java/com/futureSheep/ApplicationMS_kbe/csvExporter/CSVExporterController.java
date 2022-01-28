@@ -1,7 +1,9 @@
 package com.futureSheep.ApplicationMS_kbe.csvExporter;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +19,8 @@ public class CSVExporterController {
     @Autowired
     private CSVExporter csvExporter;
 
+
+    @Operation(summary = "Download CSV", description = "Download CSV-File with all Laptops in the datastorage", tags ="CSV-Exporter")
     @RequestMapping(path = "/laptops/csv")
     public void getAllLaptopsInCsv(HttpServletResponse servletResponse) {
         try {
@@ -27,6 +31,7 @@ public class CSVExporterController {
         } catch (IOException e) {
             log.error("Error while Request at /laptops/csv " + e);
         }
+
     }
 
 

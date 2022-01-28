@@ -23,14 +23,18 @@ public class Laptop {
     //@NotNull(message = "Weight can not be 0")
     @Positive(message = "Weight must be positive")
     private double weight;
+    private Location location;
+
+    private double mehrwertsteuer;
 
     public Laptop() {};
 
-    public Laptop(String brand, double price, double weight) {
+    public Laptop(String brand, double price, double weight, Location location) {
         this.brand = brand;
         this.price = price;
         this.weight = weight;
-        //double mws = 0.0;
+        this.location = location;
+        this.mehrwertsteuer = 0.0;
     }
 
     public UUID getId() {
@@ -65,6 +69,13 @@ public class Laptop {
         this.weight = weight;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
     @Override
     public String toString() {
@@ -87,5 +98,13 @@ public class Laptop {
     @Override
     public int hashCode() {
         return Objects.hash(id, brand, price, weight);
+    }
+
+    public double getMehrwertsteuer() {
+        return mehrwertsteuer;
+    }
+
+    public void setMehrwertsteuer(double mehrwertsteuer) {
+        this.mehrwertsteuer = mehrwertsteuer;
     }
 }
