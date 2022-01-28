@@ -53,25 +53,27 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void saveLaptopIntoDB(Laptop laptop) {
+        log.info("Saving " + laptop + " into DB");
         repository.save(laptop);
     }
 
 
     @Override
     public EntityModel<Laptop> getSingleLaptop(UUID id) {
-        // muss auch direkt mws mitgeben danach
         Laptop laptop = repository.findById(id).orElseThrow(() -> new LaptopNotFoundException(id));
         return assembler.toModel(laptop);
     }
 
     @Override
     public void deleteLaptop(UUID id) {
+        log.info("Laptop with id " + id + " deleted");
         repository.deleteById(id);
     }
 
     @Override
     public double getPriceOfLaptop(UUID id) {
         Laptop laptop = repository.findById(id).orElseThrow(() -> new LaptopNotFoundException(id));
+        log.info("Get price of laptop with id " + id);
         return laptop.getPrice();
     }
 
