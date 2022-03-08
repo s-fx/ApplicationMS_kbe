@@ -13,7 +13,7 @@ import java.util.Set;
 @Service("LaptopValidationService")
 public class LaptopValidationService {
 
-    @Autowired
+    //@Autowired
     private Validator validator;
 
 
@@ -24,7 +24,7 @@ public class LaptopValidationService {
     hibernate aber kann auch sein dass wir hier noch
     ne dao klasse schreiben müssen.*/
 
-    @Autowired
+    //@Autowired
     private ProductService productService;
 
     public String addLaptop(Laptop laptop) {

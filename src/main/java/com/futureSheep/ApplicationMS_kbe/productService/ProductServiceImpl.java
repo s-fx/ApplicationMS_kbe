@@ -6,8 +6,8 @@ import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopModelAssembler;
 import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopRepository;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import com.futureSheep.ApplicationMS_kbe.validation.LaptopValidationService;
+import lombok.AllArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +22,22 @@ import java.util.stream.Collectors;
  */
 @CommonsLog
 @Service
+@AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
 
-    @Autowired
-    private LaptopRepository repository;
-    @Autowired
+    //@Autowired
+    //private LaptopRepository repository;
+    private final LaptopRepository repository;
+
+    //@Autowired
     private LaptopModelAssembler assembler;
-    @Autowired
+    //@Autowired
     private CalculatorService calculatorService;
-    @Autowired
+    //@Autowired
     private LaptopValidationService laptopValidationService;
+
+
 
     @Override
     public List<EntityModel<Laptop>> collectAllLaptops() {
@@ -44,7 +49,6 @@ public class ProductServiceImpl implements ProductService {
             Laptop lap = laptop.getContent();
             lap.setMehrwertsteuer(getMWSOfLaptop(lap.getPrice()));
         }
-
 
         return laptops;
     }
@@ -74,8 +78,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteLaptop(UUID id) {
-        log.info("Laptop with id " + id + " deleted");
+        if(repository.findById(id).isEmpty()) {
+            throw new LaptopNotFoundException(id);
+        }
         repository.deleteById(id);
+        log.info("Laptop with id " + id + " deleted");
     }
 
     @Override

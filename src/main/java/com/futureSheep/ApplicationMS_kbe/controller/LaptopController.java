@@ -5,6 +5,7 @@ import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
