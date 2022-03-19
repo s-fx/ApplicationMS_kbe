@@ -12,7 +12,7 @@ public class CalculatorServiceImpl implements CalculatorService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final String CALCULATOR_API = "http://localhost:8081/api/calculator";
+    private final String CALCULATOR_API = "http://localhost:8081/api/v1/calculator";
 
 
     @Override

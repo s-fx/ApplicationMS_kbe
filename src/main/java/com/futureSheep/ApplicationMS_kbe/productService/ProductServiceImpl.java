@@ -28,6 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
     //@Autowired
     //private LaptopRepository repository;
+    // mach mal nicht final und schau ob es klappt
     private final LaptopRepository repository;
 
     //@Autowired

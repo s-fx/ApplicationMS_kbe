@@ -20,7 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @CommonsLog
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class LaptopController {
 
     @Autowired
