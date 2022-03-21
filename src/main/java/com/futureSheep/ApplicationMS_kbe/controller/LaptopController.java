@@ -23,8 +23,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/api/v1")
 public class LaptopController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
+
+    public LaptopController(ProductService productService) {
+        this.productService = productService;
+    }
+
+
 
     /**
      * CollectionModel = HATEOAS container, encapsulate collection of laptop resources

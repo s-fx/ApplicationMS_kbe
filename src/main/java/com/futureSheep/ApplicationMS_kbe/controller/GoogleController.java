@@ -25,10 +25,5 @@ public class GoogleController {
 
         return "laptop";
     }
-/*
-    @GetMapping("/laptops/{id}")
-    String getLocation(Model model) {
-        //model.addAttribute("location", "location");
-        return "laptop";
-    }*/
+
 }
