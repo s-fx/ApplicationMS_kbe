@@ -4,11 +4,8 @@ import com.futureSheep.ApplicationMS_kbe.productService.ProductService;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.apachecommons.CommonsLog;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +17,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @CommonsLog
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/laptops")
 public class LaptopController {
 
     private final ProductService productService;
@@ -37,7 +34,7 @@ public class LaptopController {
      * curl localhost:8080/api/laptops
      */
     @Operation(summary = "Get all laptops", description = "Get a list of all laptops in the datastorage", tags ="Laptop")
-    @GetMapping("/laptops")
+    @GetMapping()
     public CollectionModel<EntityModel<Laptop>> getAllLaptops() {
         List<EntityModel<Laptop>> laptops = productService.collectAllLaptops();
         log.info("GET Request at /laptops : " + laptops);
@@ -49,11 +46,11 @@ public class LaptopController {
      * why wildcard <?> ???
      */
     @Operation(summary = "Add laptop", description = "Add a new laptop to the datastorage", tags ="Laptop")
-    @PostMapping("/laptops")
-    ResponseEntity<?> addLaptop(@RequestBody Laptop newLaptop) {
-        EntityModel<Laptop> entityModel = productService.validateLaptopBeforeSavingIntoDB(newLaptop);
+    @PostMapping()
+    void addLaptop(@RequestBody Laptop newLaptop) {
+        EntityModel<Laptop> entityModel = productService.validateAndSaveLaptop(newLaptop);
         log.info("POST Request /laptops : " + newLaptop);
-        return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
+        //return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
     }
 
     /**
@@ -63,10 +60,10 @@ public class LaptopController {
      * Link: includes a URI and a relation (see assembler)
      */
     @Operation(summary = "Get laptop", description = "Get laptop with the corresponding id", tags ="Laptop")
-    @GetMapping("/laptops/{id}")
+    @GetMapping("/{id}")
     public EntityModel<Laptop> getLaptop(@PathVariable UUID id) {
         log.info("GET Request /laptops/{id} : " + id);
-        return productService.getSingleLaptop(id);
+        return productService.getSingleLaptopFromDatawarehouseAPI(id);
     }
 
 
@@ -75,7 +72,7 @@ public class LaptopController {
      * curl -v -X DELETE localhost:8080/api/laptops/UUID
      */
     @Operation(summary = "Remove laptop", description = "Remove laptop with corresponding id from datastorage", tags ="Laptop")
-    @DeleteMapping("/laptops/{id}")
+    @DeleteMapping("/{id}")
     ResponseEntity<?> deleteLaptop(@PathVariable UUID id) {
         productService.deleteLaptop(id);
         log.info("DELETE Request /laptops/{id} : " + id);
@@ -83,7 +80,7 @@ public class LaptopController {
     }
 
     @Operation(summary = "Calculate MWS", description = "Calculate MWS for laptop with corresponding id", tags ="Laptop")
-    @GetMapping("/laptops/calculateMWS/{id}")
+    @GetMapping("/calculateMWS/{id}")
     public double calculateMWSForLaptop(@PathVariable UUID id){
         double price = productService.getPriceOfLaptop(id);
         log.info("GET Request /laptops/calculateMWS/{id} : " + id);

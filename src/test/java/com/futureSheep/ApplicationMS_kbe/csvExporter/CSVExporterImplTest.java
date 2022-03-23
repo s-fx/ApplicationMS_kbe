@@ -6,14 +6,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.futureSheep.ApplicationMS_kbe.productService.ProductService;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import com.futureSheep.ApplicationMS_kbe.products.Location;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.Disabled;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

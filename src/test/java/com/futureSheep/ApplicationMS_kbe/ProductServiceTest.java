@@ -4,7 +4,7 @@ import com.futureSheep.ApplicationMS_kbe.calculatorService.CalculatorService;
 import com.futureSheep.ApplicationMS_kbe.controller.exceptions.LaptopNotFoundException;
 import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopModelAssembler;
 import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopRepository;
-import com.futureSheep.ApplicationMS_kbe.productService.ProductServiceImpl;
+import com.futureSheep.ApplicationMS_kbe.productService.ProductService;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import com.futureSheep.ApplicationMS_kbe.products.Location;
 import com.futureSheep.ApplicationMS_kbe.validation.LaptopValidationService;
@@ -40,16 +40,16 @@ public class ProductServiceTest {
 
 
     private AutoCloseable autoCloseable;
-    private ProductServiceImpl productService;
+    private ProductService productService;
     private final String ID_STRING = "ed759a38-f002-403d-bfc2-2bd0ab88ee10";
 
 
-    @BeforeEach
+/*    @BeforeEach
     void setUp(){
         // initialise all Mocks in this Test class
         autoCloseable = MockitoAnnotations.openMocks(this);
         productService = new ProductServiceImpl(repository,assembler,calculatorService,laptopValidationService);
-    }
+    }*/
 
     @AfterEach
     void tearDown() throws Exception {
@@ -70,7 +70,7 @@ public class ProductServiceTest {
     void validateLaptopBeforeSavingIntoDBTest() {
         Laptop laptop = new Laptop("DELL", 999.99,55.4, new Location(52.521992, 13.413244));
 
-        productService.validateLaptopBeforeSavingIntoDB(laptop);
+        productService.validateAndSaveLaptop(laptop);
 
         verify(assembler).toModel(laptop);
         verify(laptopValidationService).addLaptop(laptop);

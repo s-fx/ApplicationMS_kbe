@@ -1,6 +1,5 @@
 package com.futureSheep.ApplicationMS_kbe.csvExporter;
 
-import com.futureSheep.ApplicationMS_kbe.productService.ProductService;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import lombok.extern.apachecommons.CommonsLog;
 import org.apache.commons.csv.CSVFormat;

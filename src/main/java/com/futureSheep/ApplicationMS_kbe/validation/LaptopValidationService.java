@@ -1,8 +1,8 @@
 package com.futureSheep.ApplicationMS_kbe.validation;
 
-import com.futureSheep.ApplicationMS_kbe.productService.ProductService;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
@@ -27,6 +27,13 @@ public class LaptopValidationService {
     //@Autowired
     private ProductService productService;
 
+    @Autowired
+    public LaptopValidationService(Validator validator, @Lazy ProductService productService){
+        this.validator = validator;
+        this.productService = productService;
+    }
+
+
     public String addLaptop(Laptop laptop) {
 
         Set<ConstraintViolation<Laptop>> violations = validator.validate(laptop);
@@ -46,6 +53,8 @@ public class LaptopValidationService {
         //unserem DataStorage Interface geadded. Was auch immer das dann
         //sein wird zB:
         //dao.addLaptop(laptop)
+        System.out.println("VALIDATONNNN"+productService);
+        System.out.println("VALIDATAOIN:: " + laptop);
         productService.saveLaptopIntoDB(laptop);
 
         return "Laptop: " + laptop.getBrand() + "was added";

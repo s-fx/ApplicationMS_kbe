@@ -3,7 +3,7 @@ package com.futureSheep.ApplicationMS_kbe;
 import com.futureSheep.ApplicationMS_kbe.controller.LaptopController;
 import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopModelAssembler;
 import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopRepository;
-import com.futureSheep.ApplicationMS_kbe.productService.ProductService;
+import com.futureSheep.ApplicationMS_kbe.productService.ProductServiceImpl;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import com.futureSheep.ApplicationMS_kbe.products.Location;
 
