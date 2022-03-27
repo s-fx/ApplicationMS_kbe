@@ -7202,3 +7202,118 @@ java.util.NoSuchElementException: No value present
 2022-03-27 18:40:26.636  INFO 104964 --- [http-nio-8082-exec-6] c.f.A.s.CalculatorService                : External Api at http://localhost:8085/api/v1/calculator is called with price value: 999.99
 2022-03-27 18:40:26.803  INFO 104964 --- [http-nio-8082-exec-6] c.f.A.s.CalculatorService                : External Api at http://localhost:8085/api/v1/calculator is called with price value: 1999.99
 2022-03-27 18:40:26.805  INFO 104964 --- [http-nio-8082-exec-6] c.f.A.c.LaptopController                 : GET Request at /laptops : [EntityModel { content: Laptop{id=160eeec5-1604-4c8c-b153-2cbdebca49dc, brand='HP', price=999.99, weight=55.4}, links: [<http://localhost:8082/api/v1/laptops/160eeec5-1604-4c8c-b153-2cbdebca49dc>;rel="self", <http://localhost:8082/api/v1/laptops>;rel="laptops"] }, EntityModel { content: Laptop{id=160eeec5-1604-4c8c-b153-2cbdebca49d0, brand='MACBOOK_ADDED', price=1999.99, weight=355.4}, links: [<http://localhost:8082/api/v1/laptops/160eeec5-1604-4c8c-b153-2cbdebca49d0>;rel="self", <http://localhost:8082/api/v1/laptops>;rel="laptops"] }]
+2022-03-27 18:58:58.430  INFO 107049 --- [main] c.f.A.ApplicationMsKbeApplication        : Starting ApplicationMsKbeApplication using Java 11.0.14 on earth with PID 107049 (/home/s-fx/htw/kbe/ApplicationMS_kbe/target/classes started by s-fx in /home/s-fx/htw/kbe/ApplicationMS_kbe)
+2022-03-27 18:58:58.439 DEBUG 107049 --- [main] c.f.A.ApplicationMsKbeApplication        : Running with Spring Boot v2.5.6, Spring v5.3.12
+2022-03-27 18:58:58.440  INFO 107049 --- [main] c.f.A.ApplicationMsKbeApplication        : No active profile set, falling back to default profiles: default
+2022-03-27 18:59:05.167  WARN 107049 --- [main] o.h.e.j.s.SqlExceptionHelper             : SQL Warning Code: 0, SQLState: 00000
+2022-03-27 18:59:05.167  WARN 107049 --- [main] o.h.e.j.s.SqlExceptionHelper             : table "laptopdb" does not exist, skipping
+2022-03-27 18:59:05.683  WARN 107049 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-03-27 18:59:06.530  INFO 107049 --- [main] c.f.A.ApplicationMsKbeApplication        : Started ApplicationMsKbeApplication in 9.117 seconds (JVM running for 10.821)
+2022-03-27 18:59:06.541  INFO 107049 --- [main] c.f.A.s.ProductService                   : Saving Laptop{id=160eeec5-1604-4c8c-b153-2cbdebca49dc, brand='HP', price=999.99, weight=55.4} into DB
+2022-03-27 18:59:06.983 ERROR 107049 --- [main] o.s.b.SpringApplication                  : Application run failed
+
+java.lang.IllegalStateException: Failed to execute CommandLineRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:794) [spring-boot-2.5.6.jar:2.5.6]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:775) [spring-boot-2.5.6.jar:2.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:345) [spring-boot-2.5.6.jar:2.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) [spring-boot-2.5.6.jar:2.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) [spring-boot-2.5.6.jar:2.5.6]
+	at com.futureSheep.ApplicationMS_kbe.ApplicationMsKbeApplication.main(ApplicationMsKbeApplication.java:13) [classes/:?]
+Caused by: org.springframework.web.client.ResourceAccessException: I/O error on POST request for "http://localhost:8080/api/v1/laptops": Failed to connect to localhost/127.0.0.1:8080; nested exception is java.net.ConnectException: Failed to connect to localhost/127.0.0.1:8080
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:785) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:711) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.client.RestTemplate.postForObject(RestTemplate.java:437) ~[spring-web-5.3.12.jar:5.3.12]
+	at com.futureSheep.ApplicationMS_kbe.services.DatawarehouseService.saveLaptopIntoDatawareHouseDB(DatawarehouseService.java:47) ~[classes/:?]
+	at com.futureSheep.ApplicationMS_kbe.services.ProductService.saveLaptopIntoDB(ProductService.java:53) ~[classes/:?]
+	at com.futureSheep.ApplicationMS_kbe.utils.DatabaseLoader.lambda$initDatabase$0(DatabaseLoader.java:37) ~[classes/:?]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:791) ~[spring-boot-2.5.6.jar:2.5.6]
+	... 5 more
+Caused by: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:8080
+	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.java:265) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.RealConnection.connect(RealConnection.java:183) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.java:224) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.java:108) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.java:88) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.Transmitter.newExchange(Transmitter.java:169) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.java:41) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:142) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:117) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.java:94) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:142) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:117) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.java:93) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:142) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.java:88) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:142) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:117) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.RealCall.getResponseWithInterceptorChain(RealCall.java:229) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.RealCall.execute(RealCall.java:81) ~[okhttp-3.14.9.jar:?]
+	at org.springframework.http.client.OkHttp3ClientHttpRequest.executeInternal(OkHttp3ClientHttpRequest.java:73) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:66) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:776) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:711) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.client.RestTemplate.postForObject(RestTemplate.java:437) ~[spring-web-5.3.12.jar:5.3.12]
+	at com.futureSheep.ApplicationMS_kbe.services.DatawarehouseService.saveLaptopIntoDatawareHouseDB(DatawarehouseService.java:47) ~[classes/:?]
+	at com.futureSheep.ApplicationMS_kbe.services.ProductService.saveLaptopIntoDB(ProductService.java:53) ~[classes/:?]
+	at com.futureSheep.ApplicationMS_kbe.utils.DatabaseLoader.lambda$initDatabase$0(DatabaseLoader.java:37) ~[classes/:?]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:791) ~[spring-boot-2.5.6.jar:2.5.6]
+	... 5 more
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at java.net.PlainSocketImpl.socketConnect(Native Method) ~[?:?]
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412) ~[?:?]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255) ~[?:?]
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237) ~[?:?]
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392) ~[?:?]
+	at java.net.Socket.connect(Socket.java:609) ~[?:?]
+	at okhttp3.internal.platform.Platform.connectSocket(Platform.java:130) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.java:263) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.RealConnection.connect(RealConnection.java:183) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.java:224) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.java:108) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.java:88) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.Transmitter.newExchange(Transmitter.java:169) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.java:41) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:142) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:117) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.java:94) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:142) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:117) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.java:93) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:142) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.java:88) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:142) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:117) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.RealCall.getResponseWithInterceptorChain(RealCall.java:229) ~[okhttp-3.14.9.jar:?]
+	at okhttp3.RealCall.execute(RealCall.java:81) ~[okhttp-3.14.9.jar:?]
+	at org.springframework.http.client.OkHttp3ClientHttpRequest.executeInternal(OkHttp3ClientHttpRequest.java:73) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:66) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:776) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:711) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.client.RestTemplate.postForObject(RestTemplate.java:437) ~[spring-web-5.3.12.jar:5.3.12]
+	at com.futureSheep.ApplicationMS_kbe.services.DatawarehouseService.saveLaptopIntoDatawareHouseDB(DatawarehouseService.java:47) ~[classes/:?]
+	at com.futureSheep.ApplicationMS_kbe.services.ProductService.saveLaptopIntoDB(ProductService.java:53) ~[classes/:?]
+	at com.futureSheep.ApplicationMS_kbe.utils.DatabaseLoader.lambda$initDatabase$0(DatabaseLoader.java:37) ~[classes/:?]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:791) ~[spring-boot-2.5.6.jar:2.5.6]
+	... 5 more
+
+2022-03-27 19:01:08.746  INFO 108136 --- [main] c.f.A.ApplicationMsKbeApplication        : Starting ApplicationMsKbeApplication using Java 11.0.14 on earth with PID 108136 (/home/s-fx/htw/kbe/ApplicationMS_kbe/target/classes started by s-fx in /home/s-fx/htw/kbe/ApplicationMS_kbe)
+2022-03-27 19:01:08.776 DEBUG 108136 --- [main] c.f.A.ApplicationMsKbeApplication        : Running with Spring Boot v2.5.6, Spring v5.3.12
+2022-03-27 19:01:08.778  INFO 108136 --- [main] c.f.A.ApplicationMsKbeApplication        : No active profile set, falling back to default profiles: default
+2022-03-27 19:01:14.841  WARN 108136 --- [main] o.h.e.j.s.SqlExceptionHelper             : SQL Warning Code: 0, SQLState: 00000
+2022-03-27 19:01:14.841  WARN 108136 --- [main] o.h.e.j.s.SqlExceptionHelper             : table "laptopdb" does not exist, skipping
+2022-03-27 19:01:15.525  WARN 108136 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-03-27 19:01:16.452  INFO 108136 --- [main] c.f.A.ApplicationMsKbeApplication        : Started ApplicationMsKbeApplication in 8.449 seconds (JVM running for 9.573)
+2022-03-27 19:01:16.463  INFO 108136 --- [main] c.f.A.s.ProductService                   : Saving Laptop{id=160eeec5-1604-4c8c-b153-2cbdebca49dc, brand='HP', price=999.99, weight=55.4} into DB
+2022-03-27 19:01:34.546  INFO 108136 --- [http-nio-8082-exec-1] c.f.A.s.CalculatorService                : External Api at http://localhost:8085/api/v1/calculator is called with price value: 999.99
+2022-03-27 19:01:34.679  INFO 108136 --- [http-nio-8082-exec-1] c.f.A.c.LaptopController                 : GET Request at /laptops : [EntityModel { content: Laptop{id=160eeec5-1604-4c8c-b153-2cbdebca49dc, brand='HP', price=999.99, weight=55.4}, links: [<http://localhost:8082/api/v1/laptops/160eeec5-1604-4c8c-b153-2cbdebca49dc>;rel="self", <http://localhost:8082/api/v1/laptops>;rel="laptops"] }]
+2022-03-27 19:01:39.948  INFO 108136 --- [http-nio-8082-exec-2] c.f.A.s.ProductService                   : Saving Laptop{id=160eeec5-1604-4c8c-b153-2cbdebca49d0, brand='MACBOOK_ADDED', price=1999.99, weight=355.4} into DB
+2022-03-27 19:01:40.288  INFO 108136 --- [http-nio-8082-exec-2] c.f.A.s.ProductService                   : Laptop: MACBOOK_ADDEDwas added
+2022-03-27 19:01:40.289  INFO 108136 --- [http-nio-8082-exec-2] c.f.A.c.LaptopController                 : POST Request /laptops : Laptop{id=160eeec5-1604-4c8c-b153-2cbdebca49d0, brand='MACBOOK_ADDED', price=1999.99, weight=355.4}
+2022-03-27 19:01:43.148  INFO 108136 --- [http-nio-8082-exec-3] c.f.A.s.CalculatorService                : External Api at http://localhost:8085/api/v1/calculator is called with price value: 999.99
+2022-03-27 19:01:43.275  INFO 108136 --- [http-nio-8082-exec-3] c.f.A.s.CalculatorService                : External Api at http://localhost:8085/api/v1/calculator is called with price value: 1999.99
+2022-03-27 19:01:43.279  INFO 108136 --- [http-nio-8082-exec-3] c.f.A.c.LaptopController                 : GET Request at /laptops : [EntityModel { content: Laptop{id=160eeec5-1604-4c8c-b153-2cbdebca49dc, brand='HP', price=999.99, weight=55.4}, links: [<http://localhost:8082/api/v1/laptops/160eeec5-1604-4c8c-b153-2cbdebca49dc>;rel="self", <http://localhost:8082/api/v1/laptops>;rel="laptops"] }, EntityModel { content: Laptop{id=160eeec5-1604-4c8c-b153-2cbdebca49d0, brand='MACBOOK_ADDED', price=1999.99, weight=355.4}, links: [<http://localhost:8082/api/v1/laptops/160eeec5-1604-4c8c-b153-2cbdebca49d0>;rel="self", <http://localhost:8082/api/v1/laptops>;rel="laptops"] }]
+2022-03-27 19:01:47.424  INFO 108136 --- [http-nio-8082-exec-4] c.f.A.c.LaptopController                 : GET Request /laptops/{id} : 160eeec5-1604-4c8c-b153-2cbdebca49d0
+2022-03-27 19:01:47.425  INFO 108136 --- [http-nio-8082-exec-4] c.f.A.s.DatawarehouseService             : External Api at http://localhost:8080/api/v1/laptops is called with price value: 160eeec5-1604-4c8c-b153-2cbdebca49d0
+2022-03-27 19:01:47.434  INFO 108136 --- [http-nio-8082-exec-4] c.f.A.s.CalculatorService                : External Api at http://localhost:8085/api/v1/calculator is called with price value: 1999.99
