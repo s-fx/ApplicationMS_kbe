@@ -27,8 +27,6 @@ public class ProductService {
     private DatawarehouseService datawarehouseService;
 
 
-
-
     public List<EntityModel<Laptop>> collectAllLaptops() {
         List<EntityModel<Laptop>> entityModelList = datawarehouseService.collectAllLaptopsFromDatawareHouse();
         setLocationAndMWS(entityModelList);
@@ -48,12 +46,10 @@ public class ProductService {
         log.info("Saving " + laptop + " into DB");
         UUID id = laptop.getId();
         Location location = laptop.getLocation();
-        LaptopLocationOnly laptopLocationOnly = new LaptopLocationOnly(id,location);
+        LaptopLocationOnly laptopLocationOnly = new LaptopLocationOnly(id, location);
         repository.save(laptopLocationOnly);
         datawarehouseService.saveLaptopIntoDatawareHouseDB(laptop);
     }
-
-
 
 
     public EntityModel<Laptop> getSingleLaptop(UUID id) {
@@ -81,12 +77,9 @@ public class ProductService {
         return calculatorService.getMWSOfLaptopFromExternalAPI(price);
     }
 
-    public EntityModel<Laptop> getSingleLaptopFromDatawarehouseAPI(UUID id) {
-        return datawarehouseService.getSingleLaptopFromDatawareHouse(id);
-    }
 
     private List<EntityModel<Laptop>> setLocationAndMWS(List<EntityModel<Laptop>> entityModelList) {
-        for(EntityModel<Laptop> entityModel : entityModelList) {
+        for (EntityModel<Laptop> entityModel : entityModelList) {
             Laptop laptop = entityModel.getContent();
             UUID id = laptop.getId();
             Location location = repository.findById(id).get().getLocation();

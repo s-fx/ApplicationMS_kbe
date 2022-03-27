@@ -6,7 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.futureSheep.ApplicationMS_kbe.services.CSVExporter;
+import com.futureSheep.ApplicationMS_kbe.services.CSVExporterService;
 import com.futureSheep.ApplicationMS_kbe.services.ProductService;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import com.futureSheep.ApplicationMS_kbe.products.Location;
@@ -25,11 +25,11 @@ import org.springframework.hateoas.Link;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ContextConfiguration(classes = {CSVExporter.class})
+@ContextConfiguration(classes = {CSVExporterService.class})
 @ExtendWith(SpringExtension.class)
 class CSVExporterImplTest {
     @Autowired
-    private CSVExporter cSVExporterImpl;
+    private CSVExporterService cSVExporterImpl;
 
     @MockBean
     private ProductService productService;

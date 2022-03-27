@@ -4,7 +4,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
 
 import com.futureSheep.ApplicationMS_kbe.controller.CSVExporterController;
-import com.futureSheep.ApplicationMS_kbe.services.CSVExporter;
+import com.futureSheep.ApplicationMS_kbe.services.CSVExporterService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(SpringExtension.class)
 class CSVExporterControllerTest {
     @MockBean
-    private CSVExporter cSVExporter;
+    private CSVExporterService cSVExporter;
 
     @Autowired
     private CSVExporterController cSVExporterController;

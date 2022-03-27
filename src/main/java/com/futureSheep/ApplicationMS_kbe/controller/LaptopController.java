@@ -29,7 +29,7 @@ public class LaptopController {
     }
 
 
-    @Operation(summary = "Get all laptops", description = "Get a list of all laptops in the datastorage", tags ="Laptop")
+    @Operation(summary = "Get all laptops", description = "Get a list of all laptops in the datastorage", tags = "Laptop")
     @GetMapping()
     public CollectionModel<EntityModel<Laptop>> getAllLaptops() {
         List<EntityModel<Laptop>> laptops = productService.collectAllLaptops();
@@ -38,7 +38,7 @@ public class LaptopController {
     }
 
 
-    @Operation(summary = "Add laptop", description = "Add a new laptop to the datastorage", tags ="Laptop")
+    @Operation(summary = "Add laptop", description = "Add a new laptop to the datastorage", tags = "Laptop")
     @PostMapping()
     void addLaptop(@RequestBody Laptop newLaptop) {
         EntityModel<Laptop> entityModel = productService.validateAndSaveLaptop(newLaptop);
@@ -46,7 +46,7 @@ public class LaptopController {
     }
 
 
-    @Operation(summary = "Get laptop", description = "Get laptop with the corresponding id", tags ="Laptop")
+    @Operation(summary = "Get laptop", description = "Get laptop with the corresponding id", tags = "Laptop")
     @GetMapping("/{id}")
     public EntityModel<Laptop> getLaptop(@PathVariable UUID id) {
         log.info("GET Request /laptops/{id} : " + id);
@@ -54,8 +54,7 @@ public class LaptopController {
     }
 
 
-
-    @Operation(summary = "Remove laptop", description = "Remove laptop with corresponding id from datastorage", tags ="Laptop")
+    @Operation(summary = "Remove laptop", description = "Remove laptop with corresponding id from datastorage", tags = "Laptop")
     @DeleteMapping("/{id}")
     ResponseEntity<?> deleteLaptop(@PathVariable UUID id) {
         productService.deleteLaptop(id);
@@ -63,9 +62,9 @@ public class LaptopController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Calculate MWS", description = "Calculate MWS for laptop with corresponding id", tags ="Laptop")
+    @Operation(summary = "Calculate MWS", description = "Calculate MWS for laptop with corresponding id", tags = "Laptop")
     @GetMapping("/calculateMWS/{id}")
-    public BigDecimal calculateMWSForLaptop(@PathVariable UUID id){
+    public BigDecimal calculateMWSForLaptop(@PathVariable UUID id) {
         BigDecimal price = productService.getPriceOfLaptop(id);
         log.info("GET Request /laptops/calculateMWS/{id} : " + id);
         return productService.getMWSOfLaptop(price);

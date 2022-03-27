@@ -13,11 +13,11 @@ import java.util.List;
 
 @CommonsLog
 @Service
-public class CSVExporter {
+public class CSVExporterService {
 
     private final ProductService productService;
 
-    public CSVExporter(ProductService productService) {
+    public CSVExporterService(ProductService productService) {
         this.productService = productService;
     }
 
@@ -25,7 +25,7 @@ public class CSVExporter {
         List<EntityModel<Laptop>> allLaptops = productService.collectAllLaptops();
         try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
             log.info("CSV Exporter started, gathering laptops...");
-            writeEachLaptopIntoCSV(allLaptops,csvPrinter);
+            writeEachLaptopIntoCSV(allLaptops, csvPrinter);
         } catch (IOException e) {
             log.error("Error While writing CSV ", e);
         }

@@ -18,7 +18,7 @@ public class LaptopValidationService {
     private ProductService productService;
 
     @Autowired
-    public LaptopValidationService(Validator validator, @Lazy ProductService productService){
+    public LaptopValidationService(Validator validator, @Lazy ProductService productService) {
         this.validator = validator;
         this.productService = productService;
     }

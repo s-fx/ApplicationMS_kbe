@@ -28,11 +28,10 @@ public class DatawarehouseService {
     private final String DATAWAREHOUSE_API = "http://localhost:8080/api/v1/laptops";
 
 
-
     public EntityModel<Laptop> getSingleLaptopFromDatawareHouse(UUID id) {
         log.info("External Api at " + DATAWAREHOUSE_API + " is called with price value: " + id);
         String url = DATAWAREHOUSE_API + "/{id}";
-        Laptop laptop =  restTemplate.getForObject(url, Laptop.class, id);
+        Laptop laptop = restTemplate.getForObject(url, Laptop.class, id);
         return assembler.toModel(laptop);
     }
 
@@ -43,7 +42,7 @@ public class DatawarehouseService {
         return laptops;
     }
 
-    public Laptop saveLaptopIntoDatawareHouseDB(Laptop laptop){
+    public Laptop saveLaptopIntoDatawareHouseDB(Laptop laptop) {
         restTemplate.postForObject(DATAWAREHOUSE_API, laptop, Laptop.class);
         return laptop;
     }
