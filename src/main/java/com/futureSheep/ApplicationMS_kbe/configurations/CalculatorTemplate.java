@@ -1,4 +1,4 @@
-package com.futureSheep.ApplicationMS_kbe.calculatorService;
+package com.futureSheep.ApplicationMS_kbe.configurations;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

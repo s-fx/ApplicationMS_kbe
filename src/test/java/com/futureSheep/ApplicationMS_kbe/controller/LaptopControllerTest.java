@@ -6,8 +6,10 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.futureSheep.ApplicationMS_kbe.services.ProductService;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import java.util.UUID;
@@ -61,8 +63,8 @@ class LaptopControllerTest {
 
     @Test
     void testCalculateMWSForLaptop() throws Exception {
-        when(this.productService.getMWSOfLaptop(anyDouble())).thenReturn(10.0d);
-        when(this.productService.getPriceOfLaptop((UUID) any())).thenReturn(10.0d);
+        //when(this.productService.getMWSOfLaptop(anyDouble())).thenReturn(10.0d);
+        when(this.productService.getPriceOfLaptop((UUID) any())).thenReturn(BigDecimal.valueOf(9.9));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/v1/laptops/calculateMWS/{id}",
                 UUID.randomUUID());
         MockMvcBuilders.standaloneSetup(this.laptopController)
@@ -75,8 +77,8 @@ class LaptopControllerTest {
 
     @Test
     void testCalculateMWSForLaptop2() throws Exception {
-        when(this.productService.getMWSOfLaptop(anyDouble())).thenReturn(10.0d);
-        when(this.productService.getPriceOfLaptop((UUID) any())).thenReturn(10.0d);
+        //when(this.productService.getMWSOfLaptop(anyDouble())).thenReturn(10.0d);
+        when(this.productService.getPriceOfLaptop((UUID) any())).thenReturn(BigDecimal.valueOf(9.9));
         MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/api/v1/laptops/calculateMWS/{id}",
                 UUID.randomUUID());
         getResult.contentType("https://example.org/example");

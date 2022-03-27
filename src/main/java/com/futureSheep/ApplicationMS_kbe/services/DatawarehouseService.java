@@ -1,6 +1,6 @@
-package com.futureSheep.ApplicationMS_kbe.datawarehouseService;
+package com.futureSheep.ApplicationMS_kbe.services;
 
-import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopModelAssembler;
+import com.futureSheep.ApplicationMS_kbe.configurations.LaptopModelAssembler;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import lombok.AllArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;
@@ -18,14 +18,13 @@ import java.util.stream.Collectors;
 @CommonsLog
 @AllArgsConstructor
 @Service
-public class DatawarehouseServiceImpl {
+public class DatawarehouseService {
 
     private LaptopModelAssembler assembler;
 
     @Autowired
     RestTemplate restTemplate;
 
-    // URI ändern
     private final String DATAWAREHOUSE_API = "http://localhost:8080/api/v1/laptops";
 
 

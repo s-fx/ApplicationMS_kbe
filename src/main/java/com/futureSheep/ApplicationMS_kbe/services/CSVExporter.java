@@ -1,4 +1,4 @@
-package com.futureSheep.ApplicationMS_kbe.csvExporter;
+package com.futureSheep.ApplicationMS_kbe.services;
 
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import lombok.extern.apachecommons.CommonsLog;
@@ -13,15 +13,14 @@ import java.util.List;
 
 @CommonsLog
 @Service
-public class CSVExporterImpl implements CSVExporter {
+public class CSVExporter {
 
     private final ProductService productService;
 
-    public CSVExporterImpl(ProductService productService) {
+    public CSVExporter(ProductService productService) {
         this.productService = productService;
     }
 
-    @Override
     public void writeLaptopsToCSV(Writer writer) {
         List<EntityModel<Laptop>> allLaptops = productService.collectAllLaptops();
         try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {

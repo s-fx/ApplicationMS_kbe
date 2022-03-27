@@ -1,9 +1,10 @@
 package com.futureSheep.ApplicationMS_kbe;
 
 import com.futureSheep.ApplicationMS_kbe.controller.LaptopController;
-import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopModelAssembler;
-import com.futureSheep.ApplicationMS_kbe.dataStorage.LaptopRepository;
-import com.futureSheep.ApplicationMS_kbe.productService.ProductServiceImpl;
+import com.futureSheep.ApplicationMS_kbe.configurations.LaptopModelAssembler;
+import com.futureSheep.ApplicationMS_kbe.repositories.LaptopRepository;
+import com.futureSheep.ApplicationMS_kbe.services.ProductService;
+
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import com.futureSheep.ApplicationMS_kbe.products.Location;
 
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -53,8 +55,8 @@ public class LaptopControllerTest {
     @BeforeEach
     public void setUp(){
         LaptopModelAssembler assembler = new LaptopModelAssembler();
-        laptop_1 = new Laptop("HP", 999.99,55.4, new Location(52.521992, 13.413244));
-        laptop_2 = new Laptop("Dell", 899.99,45.4, new Location(50.521992, 13.413244));
+        laptop_1 = new Laptop(UUID.randomUUID(), "HP", BigDecimal.valueOf(9.9),55.4, new Location(52.521992, 13.413244));
+        laptop_2 = new Laptop(UUID.randomUUID(), "Dell", BigDecimal.valueOf(9.9),45.4, new Location(50.521992, 13.413244));
         laptopEntityModel = assembler.toModel(laptop_1);
         List<Laptop> laptops = Arrays.asList(laptop_1,laptop_2);
         allLaptops = laptops.stream().map(assembler::toModel).collect(Collectors.toList());

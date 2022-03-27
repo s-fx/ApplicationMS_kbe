@@ -1,4 +1,4 @@
-package com.futureSheep.ApplicationMS_kbe.controller.exceptions;
+package com.futureSheep.ApplicationMS_kbe.exceptions;
 
 import java.util.UUID;
 

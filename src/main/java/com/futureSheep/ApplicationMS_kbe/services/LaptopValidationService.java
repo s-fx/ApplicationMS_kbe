@@ -1,5 +1,6 @@
-package com.futureSheep.ApplicationMS_kbe.validation;
+package com.futureSheep.ApplicationMS_kbe.services;
 
+import com.futureSheep.ApplicationMS_kbe.services.ProductService;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -13,18 +14,7 @@ import java.util.Set;
 @Service("LaptopValidationService")
 public class LaptopValidationService {
 
-    //@Autowired
     private Validator validator;
-
-
-/*   @Autowired
-    private DataStorageEntryPoint wasAuchImmer
-    -> das hier ist das interface um die laptops zu
-    unserer data storage zu adden, glaube wir benutzen hier
-    hibernate aber kann auch sein dass wir hier noch
-    ne dao klasse schreiben müssen.*/
-
-    //@Autowired
     private ProductService productService;
 
     @Autowired
@@ -49,12 +39,6 @@ public class LaptopValidationService {
 
         }
 
-        //hier wird nach erfolgreicher validierung dann der neue Laptop zu
-        //unserem DataStorage Interface geadded. Was auch immer das dann
-        //sein wird zB:
-        //dao.addLaptop(laptop)
-        System.out.println("VALIDATONNNN"+productService);
-        System.out.println("VALIDATAOIN:: " + laptop);
         productService.saveLaptopIntoDB(laptop);
 
         return "Laptop: " + laptop.getBrand() + "was added";

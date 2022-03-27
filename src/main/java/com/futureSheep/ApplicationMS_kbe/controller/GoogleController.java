@@ -1,5 +1,6 @@
 package com.futureSheep.ApplicationMS_kbe.controller;
 
+import com.futureSheep.ApplicationMS_kbe.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,13 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/laptops")
 public class GoogleController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
-    @GetMapping("/getLocationLaptop/{id}")
+    public GoogleController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @GetMapping("/getLocation/{id}")
     String getLocation(Model model, @PathVariable UUID id) {
         model.addAttribute("lat", productService.getSingleLaptop(id).getContent().getLocation().getLat());
         model.addAttribute("lng", productService.getSingleLaptop(id).getContent().getLocation().getLng());
