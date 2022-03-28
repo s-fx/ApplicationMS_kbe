@@ -9,7 +9,6 @@ import java.util.UUID;
 public class LaptopLocationOnly {
 
     @Id
-    //@GeneratedValue
     @Column(name = "id", updatable = false)
     private UUID id;
     @Column(name = "location", nullable = false)

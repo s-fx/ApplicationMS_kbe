@@ -22,16 +22,16 @@ public class CSVExporterController {
     }
 
 
-    @Operation(summary = "Download CSV", description = "Download CSV-File with all Laptops in the datastorage", tags ="CSV-Exporter")
+    @Operation(summary = "Download CSV", description = "Download CSV-File with all Laptops in the datastorage", tags = "CSV-Exporter")
     @RequestMapping(path = "/laptops/csv")
     public void getAllLaptopsInCsv(HttpServletResponse servletResponse) {
         try {
-            log.info("GET Request for csv file /laptops/csv");
+            log.info("[CSVExporterController] GET Request for csv file /laptops/csv");
             servletResponse.setContentType("text/csv");
-            servletResponse.addHeader("Content-Disposition","attachment; filename=\"laptops.csv\"");
+            servletResponse.addHeader("Content-Disposition", "attachment; filename=\"laptops.csv\"");
             csvExporter.writeLaptopsToCSV(servletResponse.getWriter());
         } catch (IOException e) {
-            log.error("Error while Request at /laptops/csv " + e);
+            log.error("[CSVExporterController] Error while Request at /laptops/csv " + e);
         }
 
     }

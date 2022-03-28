@@ -1,32 +1,22 @@
 package com.futureSheep.ApplicationMS_kbe.products;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
-//@Entity
-//@Table(name = "laptopdb")
 public class Laptop {
 
-   // @Id @GeneratedValue
-    //@Column(name = "id", updatable = false)
     private UUID id;
-    //@Column(name = "brand", nullable = false, columnDefinition = "TEXT")
-    //@NotNull(message = "Brand name must be betweenn 3 and 20 characters")
-    //@Size(min = 1, max = 20)
     private String brand;
-    //@Column(name = "price", nullable = false)
-    //@NotNull(message = "Price can not be 0")
     private BigDecimal price;
-    //@Positive(message = "Weight must be positive")
     private double weight;
     private Location location;
-
     private BigDecimal mehrwertsteuer;
 
-    public Laptop() {};
+    public Laptop() {
+    }
+
+    ;
 
     public Laptop(UUID id, String brand, BigDecimal price, double weight, Location location) {
         this.id = id;
