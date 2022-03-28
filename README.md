@@ -17,17 +17,9 @@ Das Projekt ist das Backend für eine E-Commerce Plattform, auf der Nutzer Lapto
 - CalculatorMS_kbe
 - ApplicationMS_kbe
 
-<br>
-
-
-
 ***
 
-![Diagram](/images/Blank_Diagram_1.png?raw=true "Overview Top Level Component")
-
-***
-
-![Sequence Diagram](/images/sequence_diagram_user_to_system_1.png?raw=true "Sequence Diagram")
+![Overview](/images/Blank_Diagram_1.png?raw=true "Overview")
 
 ***
 
