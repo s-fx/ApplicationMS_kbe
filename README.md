@@ -19,7 +19,7 @@ Das Projekt ist das Backend für eine E-Commerce Plattform, auf der Nutzer Lapto
 
 ***
 
-![Overview](/src/main/ressources/images/Blank_diagram_1.png?raw=true "Overview")
+![Overview](/src/main/resources/images/Blank_diagram_1.png?raw=true "Overview")
 
 ***
 
