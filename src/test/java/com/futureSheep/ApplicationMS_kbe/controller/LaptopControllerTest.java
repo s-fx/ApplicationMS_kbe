@@ -1,172 +1,93 @@
 package com.futureSheep.ApplicationMS_kbe.controller;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyDouble;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import com.futureSheep.ApplicationMS_kbe.controller.LaptopController;
+import com.futureSheep.ApplicationMS_kbe.configurations.LaptopModelAssembler;
+import com.futureSheep.ApplicationMS_kbe.repositories.LaptopRepository;
 import com.futureSheep.ApplicationMS_kbe.services.ProductService;
+
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
+import com.futureSheep.ApplicationMS_kbe.products.Location;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 
-import java.util.UUID;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-@ContextConfiguration(classes = {LaptopController.class})
-@ExtendWith(SpringExtension.class)
-class LaptopControllerTest {
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@WebMvcTest(LaptopController.class)
+public class LaptopControllerTest {
+
     @Autowired
-    private LaptopController laptopController;
+    LaptopController laptopController;
+
+    @Autowired
+    MockMvc mockMvc;
 
     @MockBean
-    private ProductService productService;
+    ProductService productService;
+
+    @MockBean
+    LaptopRepository repository;
+
+
+    private Laptop laptop_1;
+    private Laptop laptop_2;
+    private EntityModel<Laptop> laptopEntityModel;
+    List<EntityModel<Laptop>> allLaptops;
+
+
+    @BeforeEach
+    public void setUp() {
+        LaptopModelAssembler assembler = new LaptopModelAssembler();
+        laptop_1 = new Laptop(UUID.randomUUID(), "HP", BigDecimal.valueOf(999.99), 55.4, new Location(52.521992, 13.413244));
+        laptop_2 = new Laptop(UUID.randomUUID(), "Dell", BigDecimal.valueOf(9.9), 45.4, new Location(50.521992, 13.413244));
+        laptopEntityModel = assembler.toModel(laptop_1);
+        List<Laptop> laptops = Arrays.asList(laptop_1, laptop_2);
+        allLaptops = laptops.stream().map(assembler::toModel).collect(Collectors.toList());
+    }
 
 
     @Test
-    void testDeleteLaptop() throws Exception {
-        doNothing().when(this.productService).deleteLaptop((UUID) any());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/v1/laptops/{id}",
-                UUID.randomUUID());
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.laptopController)
-                .build()
-                .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent());
+    public void getAllLaptops_success() throws Exception {
+
+        given(productService.collectAllLaptops()).willReturn(allLaptops);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/v1/laptops")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$..laptopList[0].brand").value("HP"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$..laptopList[1].brand").value("Dell"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$..laptopList[0].price").value(999.99));
     }
 
     @Test
-    void testDeleteLaptop2() throws Exception {
-        doNothing().when(this.productService).deleteLaptop((UUID) any());
-        MockHttpServletRequestBuilder deleteResult = MockMvcRequestBuilders.delete("/api/v1/laptops/{id}",
-                UUID.randomUUID());
-        deleteResult.contentType("https://example.org/example");
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.laptopController)
-                .build()
-                .perform(deleteResult);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent());
-    }
+    public void getSingleLaptop_success() throws Exception {
+        UUID id = UUID.randomUUID();
 
-    @Test
-    void testCalculateMWSForLaptop() throws Exception {
-        //when(this.productService.getMWSOfLaptop(anyDouble())).thenReturn(10.0d);
-        when(this.productService.getPriceOfLaptop((UUID) any())).thenReturn(BigDecimal.valueOf(9.9));
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/v1/laptops/calculateMWS/{id}",
-                UUID.randomUUID());
-        MockMvcBuilders.standaloneSetup(this.laptopController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("10.0"));
-    }
+        EntityModel<Laptop> entity_laptop = new EntityModel<>(laptop_1);
+        given(productService.getSingleLaptop(id)).willReturn(entity_laptop);
 
-    @Test
-    void testCalculateMWSForLaptop2() throws Exception {
-        //when(this.productService.getMWSOfLaptop(anyDouble())).thenReturn(10.0d);
-        when(this.productService.getPriceOfLaptop((UUID) any())).thenReturn(BigDecimal.valueOf(9.9));
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/api/v1/laptops/calculateMWS/{id}",
-                UUID.randomUUID());
-        getResult.contentType("https://example.org/example");
-        MockMvcBuilders.standaloneSetup(this.laptopController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("10.0"));
-    }
-
-    @Test
-    void testGetAllLaptops() throws Exception {
-        when(this.productService.collectAllLaptops()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/v1/laptops");
-        MockMvcBuilders.standaloneSetup(this.laptopController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"links\":[{\"rel\":\"self\",\"href\":\"http://localhost/api/v1/laptops\"}],\"content\":[]}"));
-    }
-
-    @Test
-    void testGetAllLaptops2() throws Exception {
-        when(this.productService.collectAllLaptops()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/api/v1/laptops");
-        getResult.contentType("https://example.org/example");
-        MockMvcBuilders.standaloneSetup(this.laptopController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"links\":[{\"rel\":\"self\",\"href\":\"http://localhost/api/v1/laptops\"}],\"content\":[]}"));
-    }
-
-    @Test
-    void testGetAllLaptops3() throws Exception {
-        when(this.productService.collectAllLaptops()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/api/v1/laptops");
-        getResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(this.laptopController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"links\":[{\"rel\":\"self\",\"href\":\"http://localhost/api/v1/laptops\"}],\"content\":[]}"));
-    }
-
-    @Test
-    void testGetLaptop() throws Exception {
-        Iterable<Link> iterable = (Iterable<Link>) mock(Iterable.class);
-        doNothing().when(iterable).forEach((java.util.function.Consumer<? super Link>) any());
-        EntityModel<Laptop> entityModel = new EntityModel<>(new Laptop(), iterable);
-
-        when(this.productService.getSingleLaptop((UUID) any())).thenReturn(entityModel);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/v1/laptops/{id}",
-                UUID.randomUUID());
-        MockMvcBuilders.standaloneSetup(this.laptopController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string(
-                                "{\"id\":null,\"brand\":null,\"price\":0.0,\"weight\":0.0,\"location\":null,\"mehrwertsteuer\":0.0,\"links\":[]}"));
-    }
-
-    @Test
-    void testGetLaptop2() throws Exception {
-        Iterable<Link> iterable = (Iterable<Link>) mock(Iterable.class);
-        doNothing().when(iterable).forEach((java.util.function.Consumer<? super Link>) any());
-        EntityModel<Laptop> entityModel = new EntityModel<>(new Laptop(), iterable);
-
-        when(this.productService.getSingleLaptop((UUID) any())).thenReturn(entityModel);
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/api/v1/laptops/{id}", UUID.randomUUID());
-        getResult.contentType("https://example.org/example");
-        MockMvcBuilders.standaloneSetup(this.laptopController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string(
-                                "{\"id\":null,\"brand\":null,\"price\":0.0,\"weight\":0.0,\"location\":null,\"mehrwertsteuer\":0.0,\"links\":[]}"));
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/v1/laptops/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$..brand").value("HP"));
     }
 }
-

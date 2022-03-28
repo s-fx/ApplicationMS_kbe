@@ -24,10 +24,10 @@ public class CSVExporterService {
     public void writeLaptopsToCSV(Writer writer) {
         List<EntityModel<Laptop>> allLaptops = productService.collectAllLaptops();
         try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
-            log.info("CSV Exporter started, gathering laptops...");
+            log.info("[CSVExporter] CSV Exporter started, gathering laptops...");
             writeEachLaptopIntoCSV(allLaptops, csvPrinter);
         } catch (IOException e) {
-            log.error("Error While writing CSV ", e);
+            log.error("[CSVExporter] Error While writing CSV :", e);
         }
     }
 

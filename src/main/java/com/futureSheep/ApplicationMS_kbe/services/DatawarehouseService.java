@@ -29,7 +29,7 @@ public class DatawarehouseService {
 
 
     public EntityModel<Laptop> getSingleLaptopFromDatawareHouse(UUID id) {
-        log.info("External Api at " + DATAWAREHOUSE_API + " is called with price value: " + id);
+        log.info("[DatawarehouseService] External Api at " + DATAWAREHOUSE_API + " is called with id: " + id);
         String url = DATAWAREHOUSE_API + "/{id}";
         Laptop laptop = restTemplate.getForObject(url, Laptop.class, id);
         return assembler.toModel(laptop);
@@ -38,18 +38,23 @@ public class DatawarehouseService {
     public List<EntityModel<Laptop>> collectAllLaptopsFromDatawareHouse() {
         ResponseEntity<Laptop[]> response = restTemplate.getForEntity(DATAWAREHOUSE_API, Laptop[].class);
         Laptop[] laptopArray = response.getBody();
-        List<EntityModel<Laptop>> laptops = Arrays.stream(laptopArray).map(assembler::toModel).collect(Collectors.toList());
-        return laptops;
+        log.info("[DatawarehouseService] Received Laptop Array Length : " + laptopArray.length);
+        List<EntityModel<Laptop>> entityModelList = Arrays.stream(laptopArray).map(assembler::toModel).collect(Collectors.toList());
+        System.out.println("EntityModelList: " + entityModelList);
+        log.info("[DatawarehouseService] Collect all Laptops from Datawarehouse: " + laptopArray);
+        return entityModelList;
     }
 
     public Laptop saveLaptopIntoDatawareHouseDB(Laptop laptop) {
         restTemplate.postForObject(DATAWAREHOUSE_API, laptop, Laptop.class);
+        log.info("[DatawarehouseService] Save Laptop into Datawarehouse: " + laptop);
         return laptop;
     }
 
     public void deleteLaptopInDatawareHouseDB(UUID id) {
         String url = DATAWAREHOUSE_API + "/" + id.toString();
         restTemplate.delete(url);
+        log.info("[DatawarehouseService] Delete Laptop from Datawarehouse with id: " + id);
     }
 
 }

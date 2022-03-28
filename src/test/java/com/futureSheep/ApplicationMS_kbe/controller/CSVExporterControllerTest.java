@@ -1,9 +1,8 @@
-package com.futureSheep.ApplicationMS_kbe.csvExporter;
+package com.futureSheep.ApplicationMS_kbe.controller;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
 
-import com.futureSheep.ApplicationMS_kbe.controller.CSVExporterController;
 import com.futureSheep.ApplicationMS_kbe.services.CSVExporterService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +27,7 @@ class CSVExporterControllerTest {
     @Test
     void testGetAllLaptopsInCsv() throws Exception {
         doNothing().when(this.cSVExporter).writeLaptopsToCSV((java.io.Writer) any());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/laptops/csv");
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/v1/laptops/csv");
         MockMvcBuilders.standaloneSetup(this.cSVExporterController)
                 .build()
                 .perform(requestBuilder)
@@ -40,7 +39,7 @@ class CSVExporterControllerTest {
     @Test
     void testGetAllLaptopsInCsv2() throws Exception {
         doNothing().when(this.cSVExporter).writeLaptopsToCSV((java.io.Writer) any());
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/api/laptops/csv");
+        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/api/v1/laptops/csv");
         getResult.contentType("https://example.org/example");
         MockMvcBuilders.standaloneSetup(this.cSVExporterController)
                 .build()

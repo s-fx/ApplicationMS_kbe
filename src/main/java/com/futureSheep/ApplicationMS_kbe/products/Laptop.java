@@ -4,20 +4,13 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
-
 public class Laptop {
 
-
     private UUID id;
-
     private String brand;
-
     private BigDecimal price;
-
     private double weight;
-
     private Location location;
-
     private BigDecimal mehrwertsteuer;
 
     public Laptop() {

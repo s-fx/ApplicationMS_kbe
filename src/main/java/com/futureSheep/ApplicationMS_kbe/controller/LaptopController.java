@@ -1,6 +1,5 @@
 package com.futureSheep.ApplicationMS_kbe.controller;
 
-import com.futureSheep.ApplicationMS_kbe.exceptions.LaptopNotFoundException;
 import com.futureSheep.ApplicationMS_kbe.services.ProductService;
 import com.futureSheep.ApplicationMS_kbe.products.Laptop;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,26 +29,26 @@ public class LaptopController {
 
 
     @Operation(summary = "Get all laptops", description = "Get a list of all laptops in the datastorage", tags = "Laptop")
-    @GetMapping()
+    @GetMapping
     public CollectionModel<EntityModel<Laptop>> getAllLaptops() {
         List<EntityModel<Laptop>> laptops = productService.collectAllLaptops();
-        log.info("GET Request at /laptops : " + laptops);
+        log.info("[LaptopController] GET Request at /laptops : " + laptops);
         return CollectionModel.of(laptops, linkTo(methodOn(LaptopController.class).getAllLaptops()).withSelfRel());
     }
 
 
     @Operation(summary = "Add laptop", description = "Add a new laptop to the datastorage", tags = "Laptop")
-    @PostMapping()
+    @PostMapping
     void addLaptop(@RequestBody Laptop newLaptop) {
-        EntityModel<Laptop> entityModel = productService.validateAndSaveLaptop(newLaptop);
-        log.info("POST Request /laptops : " + newLaptop);
+        productService.validateAndSaveLaptop(newLaptop);
+        log.info("[LaptopController] POST Request /laptops : " + newLaptop);
     }
 
 
     @Operation(summary = "Get laptop", description = "Get laptop with the corresponding id", tags = "Laptop")
     @GetMapping("/{id}")
     public EntityModel<Laptop> getLaptop(@PathVariable UUID id) {
-        log.info("GET Request /laptops/{id} : " + id);
+        log.info("[LaptopController] GET Request /laptops/{id} : " + id);
         return productService.getSingleLaptop(id);
     }
 
@@ -58,7 +57,7 @@ public class LaptopController {
     @DeleteMapping("/{id}")
     ResponseEntity<?> deleteLaptop(@PathVariable UUID id) {
         productService.deleteLaptop(id);
-        log.info("DELETE Request /laptops/{id} : " + id);
+        log.info("[LaptopController] DELETE Request /laptops/{id} : " + id);
         return ResponseEntity.noContent().build();
     }
 
@@ -66,7 +65,7 @@ public class LaptopController {
     @GetMapping("/calculateMWS/{id}")
     public BigDecimal calculateMWSForLaptop(@PathVariable UUID id) {
         BigDecimal price = productService.getPriceOfLaptop(id);
-        log.info("GET Request /laptops/calculateMWS/{id} : " + id);
+        log.info("[LaptopController] GET Request /laptops/calculateMWS/{id} : " + id);
         return productService.getMWSOfLaptop(price);
     }
 
