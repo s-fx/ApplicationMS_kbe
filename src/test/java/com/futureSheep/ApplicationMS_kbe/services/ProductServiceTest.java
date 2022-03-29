@@ -160,9 +160,25 @@ class ProductServiceTest {
     @Test
     @Disabled
     void testGetSingleLaptopWithInvalidID() {
-        assertThrows(LaptopNotFoundException.class, () -> {
-           UUID id = UUID.randomUUID();
-           productService.getSingleLaptop(id);
+        Exception exception = assertThrows(LaptopNotFoundException.class, () -> {
+            UUID id = UUID.randomUUID();
+            LaptopLocationOnly laptopLocationOnly = new LaptopLocationOnly();
+            laptopLocationOnly.setId(id_1);
+            laptopLocationOnly.setLocation(location);
+
+            Optional<LaptopLocationOnly> ofResult = Optional.of(laptopLocationOnly);
+            when(this.laptopRepository.findById(id_1)).thenReturn(ofResult);
+
+            Iterable<Link> iterable = (Iterable<Link>) mock(Iterable.class);
+            doNothing().when(iterable).forEach(any());
+            EntityModel<Laptop> entityModel = new EntityModel<>(laptop_1, iterable);
+
+            when(this.datawarehouseService.getSingleLaptopFromDatawareHouse(id_1)).thenReturn(entityModel);
+            when(productService.getMWSOfLaptop(entityModel.getContent().getPrice())).thenReturn(BigDecimal.valueOf(42L));
+            when(this.calculatorService.getMWSOfLaptopFromExternalAPI((BigDecimal) any())).thenReturn(BigDecimal.valueOf(42L));
+
+            EntityModel<Laptop> laptop = productService.getSingleLaptop(id);
+            System.out.println(laptop.getContent());
         });
     }
 

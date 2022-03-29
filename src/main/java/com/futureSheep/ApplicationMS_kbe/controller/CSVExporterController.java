@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @CommonsLog
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/laptops")
 public class CSVExporterController {
 
 
@@ -23,7 +23,7 @@ public class CSVExporterController {
 
 
     @Operation(summary = "Download CSV", description = "Download CSV-File with all Laptops in the datastorage", tags = "CSV-Exporter")
-    @RequestMapping(path = "/laptops/csv")
+    @RequestMapping(path = "/csv")
     public void getAllLaptopsInCsv(HttpServletResponse servletResponse) {
         try {
             log.info("[CSVExporterController] GET Request for csv file /laptops/csv");
